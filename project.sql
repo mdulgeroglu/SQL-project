@@ -20,5 +20,14 @@ CREATE TABLE movies
  release_date DATE,
  CONSTRAINT mie_title_id_pk PRIMARY KEY (title_id),
  CONSTRAINT mie_rating_ck CHECK (rating IN('G', 'PG', 'PG13', 'NC17', 'M', 'R')),
- CONSTRAINT mie_category_ck CHECK (category IN('DRAMA', 'COMEDY', 'ACTION', 'CHILD', 'SCIFI', 'DOCUMENTARY', 'ROMCOM', 'WESTERN'))
+ CONSTRAINT mie_category_ck CHECK (category IN('DRAMA', 'COMEDY', 'ACTION', 'CHILD', 'SCIFI', 'DOCU', 'ROMCOM', 'WESTERN'))
+);
+
+CREATE TABLE media
+(media_id NUMBER(10,0) CONSTRAINT mda_media_id_nn NOT NULL,
+ format VARCHAR2(3) CONSTRAINT mda_format_nn NOT NULL,
+ title_id NUMBER(10,0) CONSTRAINT mda_title_id_nn NOT NULL,
+ CONSTRAINT mda_media_id_pk PRIMARY KEY (media_id),
+ CONSTRAINT mda_title_id_fk FOREIGN KEY (title_id)
+    REFERENCES movies (title_id)
 );
