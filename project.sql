@@ -31,3 +31,15 @@ CREATE TABLE media
  CONSTRAINT mda_title_id_fk FOREIGN KEY (title_id)
     REFERENCES movies (title_id)
 );
+
+CREATE TABLE rental_history
+(media_id NUMBER(10,0) CONSTRAINT rhy_media_id_nn NOT NULL,
+ rental_date DATE DEFAULT SYSDATE CONSTRAINT rhy_rental_date_nn NOT NULL,
+ customer_id NUMBER(10,0) CONSTRAINT rhy_customer_id_nn NOT NULL,
+ return_date,
+ CONSTRAINT rhy_media_id_rental_date_pk PRIMARY KEY (media_id, rental_date),
+ CONSTRAINT rhy_media_id_fk FOREIGN KEY (media_id)
+    REFERENCES media (media_id),
+ CONSTRAINT rhy_customer_id_fk FOREIGN KEY (customer_id)
+    REFERENCES customers (customer_id)
+);
