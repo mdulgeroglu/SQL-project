@@ -58,3 +58,38 @@ CREATE TABLE roles
  title_id NUMBER(10,0) CONSTRAINT rls_title_id_nn NOT NULL,
  comments VARCHAR2(40),
 );
+
+CREATE SEQUENCE customer_id_seq
+    INCREMENT BY 1
+    START WITH 101
+    MAXVALUE 1000
+    NOCACHE
+    NOCYCLE;
+    
+CREATE SEQUENCE title_id_seq
+    INCREMENT BY 1
+    START WITH 1
+    MAXVALUE 1000
+    NOCACHE
+    NOCYCLE;
+
+CREATE SEQUENCE media_id_seq
+    INCREMENT BY 1
+    START WITH 92
+    MAXVALUE 1000
+    NOCACHE
+    NOCYCLE;
+
+CREATE SEQUENCE actor_id_seq
+    INCREMENT BY 1
+    START WITH 1001
+    MAXVALUE 2000
+    NOCACHE
+    NOCYCLE;
+
+SELECT sequence_name, min_value, max_value, increment_by, last_number
+FROM user_sequences
+WHERE lower(sequence_name) LIKE 'customer%'
+   OR lower(sequence_name) LIKE 'title%'
+   OR lower(sequence_name) LIKE 'media%'
+   OR lower(sequence_name) LIKE 'actor%';
