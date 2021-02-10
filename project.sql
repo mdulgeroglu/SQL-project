@@ -43,3 +43,18 @@ CREATE TABLE rental_history
  CONSTRAINT rhy_customer_id_fk FOREIGN KEY (customer_id)
     REFERENCES customers (customer_id)
 );
+
+CREATE TABLE actors
+(actor_id NUMBER(10,0) CONSTRAINT atr_actor_id_nn NOT NULL,
+ stage_name VARCHAR2(40),
+ first_name VARCHAR2(25) CONSTRAINT atr_first_name_nn NOT NULL,
+ last_name VARCHAR2(25) CONSTRAINT atr_last_name_nn NOT NULL,
+ birth_date DATE CONSTRAINT atr_birth_date_nn NOT NULL,
+ CONSTRAINT atr_actor_id_pk PRIMARY KEY (actor_id)
+);
+
+CREATE TABLE roles
+(actor_id NUMBER(10,0) CONSTRAINT rls_actor_id_nn NOT NULL,
+ title_id NUMBER(10,0) CONSTRAINT rls_title_id_nn NOT NULL,
+ comments VARCHAR2(40),
+);
