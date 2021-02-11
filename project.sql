@@ -1,3 +1,5 @@
+/* Creating tables*/
+
 CREATE TABLE customers
 (customer_id NUMBER(10,0) CONSTRAINT ctr_customer_id_nn NOT NULL,
  last_name VARCHAR2(25) CONSTRAINT ctr_last_name_nn NOT NULL,
@@ -57,7 +59,15 @@ CREATE TABLE roles
 (actor_id NUMBER(10,0) CONSTRAINT rls_actor_id_nn NOT NULL,
  title_id NUMBER(10,0) CONSTRAINT rls_title_id_nn NOT NULL,
  comments VARCHAR2(40),
+ CONSTRAINT rls_actor_id_title_id_pk PRIMARY KEY (actor_id, title_id),
+ CONSTRAINT rls_actor_id_fk FOREIGN KEY (actor_id)
+    REFERENCES actors (actor_id),
+ CONSTRAINT rls_title_id_fk FOREIGN KEY (title_id)
+    REFERENCES movies (title_id)
 );
+
+
+/* Creating sequences*/
 
 CREATE SEQUENCE customer_id_seq
     INCREMENT BY 1
@@ -87,9 +97,19 @@ CREATE SEQUENCE actor_id_seq
     NOCACHE
     NOCYCLE;
 
-SELECT sequence_name, min_value, max_value, increment_by, last_number
-FROM user_sequences
-WHERE lower(sequence_name) LIKE 'customer%'
-   OR lower(sequence_name) LIKE 'title%'
-   OR lower(sequence_name) LIKE 'media%'
-   OR lower(sequence_name) LIKE 'actor%';
+
+/* Inserting sample values into MOVIES */
+
+INSERT ALL
+   INTO movies (title_id, title, description, rating, category, release_date) 
+     VALUES (title_id_seq.NEXTVAL, 'The Grinch', 'A grumpy Grinch (Benedict Cumberbatch) plots to ruin Christmas for the village of Whoville.', 'PG', 'COMEDY', TO_DATE('9-Nov-2018', 'DD-Mon-YYYY'))
+   INTO movies (title_id, title, description, rating, category, release_date) 
+     VALUES (title_id_seq.NEXTVAL, 'Blade Runner 2049', 'Young Blade Runner Ks discovery of a long-buried secret leads him to track down former Blade Runner Rick Deckard, whos been missing for thirty years.', 'R', 'ACTION', TO_DATE('6-Oct-2017', 'DD-Mon-YYYY'))
+   INTO movies (title_id, title, description, rating, category, release_date) 
+     VALUES (title_id_seq.NEXTVAL, 'Glass', 'Security guard David Dunn uses his supernatural abilities to track Kevin Wendell Crumb, a disturbed man who has twenty-four personalities.', 'PG13', 'DRAMA', TO_DATE('18-Jan-2019', 'DD-Mon-YYYY'))
+   INTO movies (title_id, title, description, rating, category, release_date) 
+     VALUES (title_id_seq.NEXTVAL, 'Shazam!', 'A newly fostered young boy in search of his mother instead finds unexpected super powers and soon gains a powerful enemy. ', 'PG13', 'ACTION', TO_DATE('5-Apr-2019', 'DD-Mon-YYYY'))
+   INTO movies (title_id, title, description, rating, category, release_date) 
+     VALUES (title_id_seq.NEXTVAL, 'Pokémon Detective Pikachu', 'In a world where people collect Pokémon to do battle, a boy comes across an intelligent talking Pikachu who seeks to be a detective. ', 'PG', 'ACTION', TO_DATE('10-May-2019', 'DD-Mon-YYYY'))
+SELECT * FROM DUAL; 
+   
